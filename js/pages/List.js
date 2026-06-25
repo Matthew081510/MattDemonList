@@ -79,7 +79,7 @@ export default {
                         </ol>
                     </template>
                     <p>
-                        This i just a demon list of levels I have beaten :D
+                        This i just a demon list of levels I have beaten ordered by my opinion :D
                     </p>
                 </div>
             </div>
