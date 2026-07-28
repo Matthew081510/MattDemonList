@@ -1,0 +1,11 @@
+{
+    "id": ID,
+    "name": "Level name",
+    "author": "Publisher",
+    "creators": ["Creators"],
+    "verification": "Youtube Video",
+    "percentToQualify": "Attempts",
+    "password": "Rated/Unrated",
+    "records": [
+    ]
+}
