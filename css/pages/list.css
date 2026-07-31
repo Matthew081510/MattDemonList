@@ -1,39 +1,128 @@
-/* name: add-list-controls-styles */
-.list-controls {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding-left: 16px;
-  margin-bottom: 12px;
+.page-list .list-container,
+.page-list .level-container,
+.page-list .meta-container {
+    padding-block: 2rem;
+}
+.page-list .list-container {
+    padding-inline: 1rem;
+}
+.page-list .meta-container {
+    padding-right: 2rem;
 }
 
-/* Make both buttons pill-shaped, uppercase and bold while keeping their current colors */
-.list-controls .btn,
-.list-controls .btn.btn--primary {
-  padding: 10px 18px;
-  border-radius: 8px;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 13px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
-  /* Do NOT set background-color or color here so existing palette is preserved */
+.page-list .list {
+    table-layout: auto;
 }
-
-/* Slight lift / shadow on hover to match the example feel */
-.list-controls .btn:hover,
-.list-controls .btn.btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+.page-list .list .rank {
+    text-align: end;
+    padding-right: 1rem;
 }
-
-/* Active route — make it stand out by applying a subtle stronger shadow and keep colors inherited */
-.list-controls .btn.active,
-.list-controls .btn.btn--primary.active {
-  transform: none;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.28);
+.page-list .list .level {
+    width: 100%;
+}
+.page-list .list .level button {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: start;
+    word-break: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+.page-list .list .level.error button {
+    color: var(--color-error);
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+.page-list .list .level button:hover {
+    background-color: var(--color-background-hover);
+    color: var(--color-on-background-hover);
+}
+.page-list .list .level.active button {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+.page-list .level-container .level {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-right: 2rem;
+    max-width: 48rem;
+}
+.page-list .level-container .level .level-authors {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-auto-rows: max-content;
+    gap: 1rem;
+}
+.page-list .level-container .level .video {
+    aspect-ratio: 16/9;
+}
+.page-list .level-container .level .stats {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    gap: 2rem;
+}
+.page-list .level-container .level .stats li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.page-list .level-container .level .records {
+    table-layout: fixed;
+}
+.page-list .level-container .level .records tr td:not(:last-child) {
+    padding-right: 1rem;
+}
+.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .user,
+.page-list .level-container .level .records .hz {
+    padding-block: 1rem;
+}
+.page-list .level-container .level .records .user {
+    width: 100%;
+}
+.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .hz {
+    text-align: end;
+}
+.page-list .meta-container .og a:hover,
+.page-list .level-container .level .records a:hover {
+    text-decoration: underline;
+}
+.page-list .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.page-list .meta .errors {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.page-list .meta .errors .error {
+    padding: 1rem;
+    background-color: var(--color-error);
+    color: var(--color-on-error);
+    border-radius: 0.5rem;
+}
+.page-list .meta .editors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.page-list .meta .editors li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.page-list .meta .editors li img {
+    height: 1.25rem;
+}
+.page-list .meta .editors li a:hover {
+    text-decoration: underline;
 }
