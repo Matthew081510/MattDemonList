@@ -15,6 +15,7 @@ const roleIconMap = {
 };
 
 export default {
+    props: ["listName"],
     components: { Spinner, LevelAuthors },
     template: `
         <main v-if="loading">
@@ -22,6 +23,10 @@ export default {
         </main>
         <main v-else class="page-list">
             <div class="list-container">
+                <div class="list-controls">
+                    <router-link class="btn btn--primary" :class="{ active: $route.path === '/' }" to="/">Classic List</router-link>
+                    <router-link class="btn" :class="{ active: $route.path === '/pemonlist' }" to="/pemonlist">Pemon List</router-link>
+                </div>
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
@@ -30,7 +35,7 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
+                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
                             </button>
                         </td>
                     </tr>
@@ -43,7 +48,7 @@ export default {
                     <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
                     <ul class="stats">
                         <li>
-                            <div class="type-title-sm">Attempts</div>
+                            <div class="type-title-sm">Attempts/Time</div>
                             <p>{{ level.percentToQualify }}</p>
                         </li>
                         <li>
@@ -72,7 +77,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
+                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -112,7 +117,7 @@ export default {
     },
     async mounted() {
         // Hide loading spinner
-        this.list = await fetchList();
+        this.list = await fetchList(this.listName || '_list');
         this.editors = await fetchEditors();
 
         // Error handling
