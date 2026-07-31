@@ -30,7 +30,7 @@ export default {
                         </td>
                         <td class="level" :class="{ 'active': selected == i, 'error': !level }">
                             <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || `Error (${err}.json)` }}</span>
+                                <span class="type-label-lg">{{ (level && level.name) ? level.name : ('Error (' + err + '.json)') }}</span>
                             </button>
                         </td>
                     </tr>
@@ -72,7 +72,7 @@ export default {
                         <h3>List Editors</h3>
                         <ol class="editors">
                             <li v-for="editor in editors">
-                                <img :src="`/assets/${roleIconMap[editor.role]}${store.dark ? '-dark' : ''}.svg`" :alt="editor.role">
+                                <img :src="'/assets/' + roleIconMap[editor.role] + (store.dark ? '-dark' : '') + '.svg'" :alt="editor.role">
                                 <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
                                 <p v-else>{{ editor.name }}</p>
                             </li>
@@ -96,11 +96,13 @@ export default {
     }),
     computed: {
         level() {
+            if (!Array.isArray(this.list) || !this.list[this.selected]) return null;
             return this.list[this.selected][0];
         },
         video() {
+            if (!this.level) return '';
             if (!this.level.showcase) {
-                return embed(this.level.verification);
+                return embed(this.level.verification || '');
             }
 
             return embed(
@@ -111,23 +113,29 @@ export default {
         },
     },
     async mounted() {
-        // Hide loading spinner
-        this.list = await fetchList(this.listName || '_list');
-        this.editors = await fetchEditors();
+        // Load the list safely (listName prop optional)
+        try {
+            const res = await fetchList(this.listName || '_list');
+            this.list = Array.isArray(res) ? res : [];
+        } catch (e) {
+            console.error('fetchList error', e);
+            this.list = [];
+        }
+
+        try {
+            this.editors = await fetchEditors();
+        } catch (e) {
+            console.error('fetchEditors error', e);
+            this.editors = null;
+        }
 
         // Error handling
-        if (!this.list) {
+        if (!this.list || this.list.length === 0) {
             this.errors = [
                 "Failed to load list. Retry in a few minutes or notify list staff.",
             ];
         } else {
-            this.errors.push(
-                ...this.list
-                    .filter(([_, err]) => err)
-                    .map(([_, err]) => {
-                        return `Failed to load level. (${err}.json)`;
-                    })
-            );
+            this.errors.push(...this.list.filter(([_, err]) => err).map(([_, err]) => `Failed to load level. (${err}.json)`));
             if (!this.editors) {
                 this.errors.push("Failed to load list editors.");
             }
