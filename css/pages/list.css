@@ -15,6 +15,7 @@ background-color: var(--color-background);
     border: none;
     border-radius: 0.5rem;
     padding: 1rem;
+    gap: 2rem;
     text-align: start;
     word-break: normal;
     overflow-wrap: anywhere;
