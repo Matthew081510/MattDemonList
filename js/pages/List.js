@@ -22,6 +22,10 @@ export default {
         </main>
         <main v-else class="page-list">
             <div class="list-container">
+            <div class="list-controls">
+                    <router-link class="btn btn--primary" :class="{ active: $route.path === '/' }" to="/">Classic List</router-link>
+                    <router-link class="btn" :class="{ active: $route.path === '/pemonlist' }" to="/pemonlist">Pemon List</router-link>
+                </div>
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
                         <td class="rank">
