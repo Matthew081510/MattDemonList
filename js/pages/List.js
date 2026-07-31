@@ -112,7 +112,7 @@ export default {
     },
     async mounted() {
         // Hide loading spinner
-        this.list = await fetchList();
+        this.list = await fetchList(this.listName || '_list');
         this.editors = await fetchEditors();
 
         // Error handling
