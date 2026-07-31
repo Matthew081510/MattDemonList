@@ -1,6 +1,7 @@
 .page-list .list-container,
 .page-list .level-container,
-.page-list .meta-container {
+.page-list .meta-container,
+.page-list .list-controls {
     padding-block: 2rem;
 }
 .page-list .list-container {
@@ -14,8 +15,7 @@ background-color: var(--color-background);
     color: var(--color-on-background);
     border: none;
     border-radius: 0.5rem;
-    padding: 1rem;
-    gap: 2rem;
+    padding: 2rem;
     text-align: start;
     word-break: normal;
     overflow-wrap: anywhere;
@@ -47,7 +47,7 @@ background-color: var(--color-background);
     cursor: not-allowed;
     text-decoration: line-through;
 }
-.page-list .list .level button:hover {
+.page-list .list .level .list-controls button:hover {
     background-color: var(--color-background-hover);
     color: var(--color-on-background-hover);
 }
